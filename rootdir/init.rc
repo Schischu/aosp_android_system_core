@@ -29,6 +29,7 @@ on init
 
     # Link /vendor to /system/vendor for devices without a vendor partition.
     symlink /system/vendor /vendor
+    symlink /system/vendor/lib/egl /gl
 
     # Create cgroup mount point for cpu accounting
     mkdir /acct
@@ -688,9 +689,9 @@ service installd /system/bin/installd
     class main
     socket installd stream 600 system system
 
-service flash_recovery /system/bin/install-recovery.sh
-    class main
-    oneshot
+#service flash_recovery /system/bin/install-recovery.sh
+#    class main
+#    oneshot
 
 service racoon /system/bin/racoon
     class main
