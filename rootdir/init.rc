@@ -634,6 +634,11 @@ service debuggerd64 /system/bin/debuggerd64
     class main
     writepid /dev/cpuset/system-background/tasks
 
+service cpboot-daemon /sbin/cbd -d -txmm7160 -bh -mh -p 13
+    class main
+    user root
+    group radio cache inet misc audio sdcard_rw log sdcard_r shell
+
 service ril-daemon /system/bin/rild
     class main
     socket rild stream 660 root radio
@@ -641,6 +646,7 @@ service ril-daemon /system/bin/rild
     socket rild-debug stream 660 radio system
     user root
     group radio cache inet misc audio log
+    onrestart restart cpboot-daemon
 
 service surfaceflinger /system/bin/surfaceflinger
     class core
