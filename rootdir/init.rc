@@ -29,6 +29,8 @@ on init
 
     # Link /vendor to /system/vendor for devices without a vendor partition.
     symlink /system/vendor /vendor
+    symlink /system/lib/egl /egl
+    symlink /system/lib/egl /gl
 
     # Create cgroup mount point for cpu accounting
     mkdir /acct
@@ -568,7 +570,7 @@ service logd-reinit /system/bin/logd --reinit
     writepid /dev/cpuset/system-background/tasks
     disabled
 
-service healthd /sbin/healthd
+service healthd /system/bin/healthd
     class core
     critical
     seclabel u:r:healthd:s0
@@ -586,7 +588,7 @@ on property:ro.debuggable=1
     start console
 
 # adbd is controlled via property triggers in init.<platform>.usb.rc
-service adbd /sbin/adbd --root_seclabel=u:r:su:s0
+service adbd /system/bin/adbd --root_seclabel=u:r:su:s0
     class core
     socket adbd stream 660 system system
     disabled
